@@ -200,7 +200,6 @@ static void DeviceRemoved(struct udev_device* dev) {
 
 	if(item == NULL) {
 		item = new ListResultItem_t();
-		GetProperties(dev, item);
 	}
 
 	currentItem = item;
