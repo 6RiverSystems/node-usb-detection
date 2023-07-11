@@ -54,6 +54,6 @@
     "eslint": "^4.19.1",
     "jasmine": "^3.1.0",
     "node-gyp": "^3.8.0",
-    "prebuild": "^8.0.1"
+    "prebuild": "^11.0.4"
   }
 }
