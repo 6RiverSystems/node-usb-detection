@@ -1,3 +1,11 @@
+# 🛑🛑 Deprecated 🛑🛑
+
+This library is now deprecated. We recommend using [`usb`](https://github.com/node-usb/node-usb#migrating-from-node-usb-detection) for hotplug detection instead. It supports a wider range of platforms, using a more proven codebase. 
+
+For help migrating, refer to the [documentation for `usb`](https://github.com/node-usb/node-usb#migrating-from-node-usb-detection)
+
+---
+
 [![npm version](https://badge.fury.io/js/usb-detection.svg)](http://badge.fury.io/js/usb-detection) [![Gitter](https://badges.gitter.im/MadLittleMods/node-usb-detection.svg)](https://gitter.im/MadLittleMods/node-usb-detection?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 
@@ -11,9 +19,30 @@
 
 # Install
 
-```
+```sh
 npm install usb-detection
 ```
+
+## Install for Electron
+
+This module uses native extensions and needs to be compiled for your target version of Electron. Precompiled binaries for recent Node.js and Electron versions are built and published using [prebuild][] and can be installed automatically using [electron-rebuild][].
+
+See the [Electron docs for using native modules][electron-native-modules] to ensure your project is set up to correctly use the prebuilt binaries for your version of Electron.
+
+[prebuild]: https://github.com/prebuild/prebuild
+[electron-rebuild]: https://github.com/electron/electron-rebuild
+[electron-native-modules]: https://www.electronjs.org/docs/tutorial/using-native-node-modules
+
+---
+
+If you run into the following error, here are the exact steps you can use:
+
+```
+detection.node was compiled against a different Node.js version using NODE_MODULE_VERSION 72. This version of Node.js requires NODE_MODULE_VERSION 80. Please try re-compiling or re-installing
+```
+
+ 1. `npm i electron-rebuild --save-dev`
+ 1. `./node_modules/.bin/electron-rebuild`
 
 
 # Usage
@@ -176,58 +205,49 @@ usbDetect.stopMonitoring();
 
 Make sure you call `usbDetect.startMonitoring()` before any calls to `usbDetect.find()`.
 
-# Development (compile from source)
 
-This assumes you also have everything on your system necessary to compile ANY native module for Node.js. This may not be the case, though, so please ensure the following requirements are satisfied before filing an issue about "Does not install". For all operating systems, please ensure you have Python 2.x installed AND not 3.0, [node-gyp](https://github.com/TooTallNate/node-gyp) (what we use to compile) requires Python 2.x.
-
-
-### Windows:
-
- - Visual Studio 2013/2015 Community
- - Visual Studio 2010
- - Visual C++ Build Tools 2015: https://github.com/nodejs/node-gyp/issues/629#issuecomment-153196245
-
-If you are having problems building, [please read this](https://github.com/TooTallNate/node-gyp/issues/44).
-
-#### `npm run rebuild` -> `The system cannot find the path specified.`
+### `npm run rebuild` -> `The system cannot find the path specified.`
 
 If you are running into the `The system cannot find the path specified.` error when running `npm run rebuild`,
-make sure you have Python 2 installed and on your PATH.
+make sure you have Python installed and on your PATH.
 
 You can verify `node-gyp` is configured correctly by looking at the output of `node-gyp configure --verbose`.
 
+
+### To build a debug version with error outputs use:
+
 ```sh
-$ node-gyp configure --verbose
-...
-gyp verb check python checking for Python executable "python2" in the PATH
-gyp verb `which` succeeded python2 C:\Python27\python2.EXE
+$ npm run rebuild --debug
 ```
 
-If you already have Python 3 installed, you can install Python 2 alongside and
-create a symlink called `python2.exe` via `mklink "C:\Python27\python2.exe" "C:\Python27\python.exe"`
-and add the directory to your path.
 
+# Development (compile from source)
 
-### Mac OS X:
+This assumes you also have everything on your system necessary to compile ANY native module for Node.js using [node-gyp](https://github.com/nodejs/node-gyp). This may not be the case, though, so please ensure the following requirements are satisfied before filing an issue about "does not install".
 
-Ensure that you have at a minimum, the xCode Command Line Tools installed appropriate for your system configuration. If you recently upgraded your OS, it probably removed your installation of Command Line Tools, please verify before submitting a ticket.
+If you are developing locally, you should use [Node.js v14](https://nodejs.org), but if you are just trying to install usb-detection, you should be able to compile from source using any supported version of Node.
 
-### Linux:
+### Windows
 
-You know what you need for you system, basically your appropriate analog of build-essential. Keep rocking!
+See [node-gyp's Windows installation instructions](https://github.com/nodejs/node-gyp#on-windows).
 
-To compile and install native addons from npm you may also need to install build tools *([source](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions))*:
+### macOS
 
+See [node-gyp's macOS installation instructions](https://github.com/nodejs/node-gyp#on-windows).
+
+### Linux
+
+You know what you need for you system, basically your appropriate analog of build-essential. Keep rocking! See [node-gyp's Unix installation instructions](https://github.com/nodejs/node-gyp#on-unix) for more details.
+
+```sh
+sudo apt-get install build-essential
 ```
-sudo apt-get install -y build-essential
-```
 
-Also install libudev:
+You will also need to install `libudev-dev`.
 
-```
+```sh
 sudo apt-get install libudev-dev
 ```
-
 
 # Testing
 

@@ -30,7 +30,19 @@
             "libraries": [
               "-framework",
               "IOKit"
-            ]
+            ],
+            'default_configuration': 'Debug',
+            'configurations': {
+              'Debug': {
+                'defines': [ 'DEBUG', '_DEBUG' ],
+              },
+              'Release': {
+                'defines': [ 'NDEBUG' ]
+              }
+            },
+            'xcode_settings': {
+              'MACOSX_DEPLOYMENT_TARGET': '10.9'
+            }
           }
         ],
         ['OS=="linux"',
